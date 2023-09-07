@@ -1,4 +1,5 @@
 #include <iostream>
+#include <numeric>
 
 class Fraction
 {
@@ -13,110 +14,104 @@ public:
 		denominator_ = denominator;
 	}
 
-	int operator*(Fraction other) {
-		if (denominator_ == other.denominator_) {
-			return denominator_;
-		}
-		else {
-			return denominator_ * other.denominator_;
-		}
-	}
-	int operator/(Fraction other) {
-		if (denominator_ == other.denominator_) {
-			return numerator_ / other.numerator_;
-		}
-		else {
-			return denominator_ * other.denominator_;
-		}
-	}
 	int operator+(Fraction other) {
-		if (denominator_ == other.denominator_) {
-			return numerator_ + other.numerator_;
-		}
-		else {
-			return ((numerator_ * other.denominator_) + (denominator_ * other.numerator_));
-		}
+		return ((numerator_ * other.denominator_) + (denominator_ * other.numerator_));
 	}
+
 	int operator-(Fraction other) {
-		if (denominator_ == other.denominator_) {
-			return numerator_ - other.numerator_;
-		}
-		else {
-			return ((numerator_ * other.denominator_) - (denominator_ * other.numerator_));
-		}
+		return ((numerator_ * other.denominator_) - (denominator_ * other.numerator_));
 	}
-	};
 
-	int main()
+	int operator*(Fraction other) {
+		return (numerator_ * other.numerator_);
+	}
+
+	int operator/(Fraction other) {
+		return (numerator_ * other.denominator_);
+	}
+
+	Fraction& operator++() { return *this; }
+	Fraction operator--(int)
 	{
-		setlocale(LC_ALL, "Russian");
-
-		int numerator_1 = 0;
-		int denominator_1 = 0;
-		int numerator_2 = 0;
-		int denominator_2 = 0;
-
-		std::cout << "Введите числитель дроби 1: ";
-		std::cin >> numerator_1;
-		std::cout << "Введите знаменатель дроби 1: ";
-		std::cin >> denominator_1;
-		std::cout << "Введите числитель дроби 2: ";
-		std::cin >> numerator_2;
-		std::cout << "Введите знаменатель дроби 2: ";
-		std::cin >> denominator_2;
-
-		Fraction f1(numerator_1, denominator_1);
-		Fraction f2(numerator_2, denominator_2);
-
-		std::cout << numerator_1 << "/" << denominator_1 << " + " << numerator_2 << "/" << denominator_2 << " = " << f1 + f2 << "/" << f1 * f2 << std::endl;
-		std::cout << numerator_1 << "/" << denominator_1 << " - " << numerator_2 << "/" << denominator_2 << " = " << f1 - f2 << "/" << f1 * f2 << std::endl;
-		std::cout << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << f1 * f2 << "/" << f1 * f2 << std::endl;
-		std::cout << numerator_1 << "/" << denominator_1 << " / " << numerator_2 << "/" << denominator_2 << " = " << f1 / f2 << "/" << f1 * f2 << std::endl;
-		std::cout << "++" << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << std::endl;
-		std::cout << "Значение дроби 1 = ";
-
-		return 0;
+		Fraction temp = *this;
+		(*this)--;
+		return temp;
 	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+
+	int numerator_1 = 0;
+	int denominator_1 = 0;
+	int numerator_2 = 0;
+	int denominator_2 = 0;
+
+	std::cout << "Введите числитель дроби 1: ";
+	std::cin >> numerator_1;
+	std::cout << "Введите знаменатель дроби 1: ";
+	std::cin >> denominator_1;
+	std::cout << "Введите числитель дроби 2: ";
+	std::cin >> numerator_2;
+	std::cout << "Введите знаменатель дроби 2: ";
+	std::cin >> denominator_2;
+
+	Fraction f1(numerator_1, denominator_1);
+	Fraction f2(numerator_2, denominator_2);
+
+	int q = std::gcd(denominator_1, denominator_2);
+
+	std::cout << numerator_1 << "/" << denominator_1 << " + " << numerator_2 << "/" << denominator_2 << " = " << (f1 + f2) / q << "/" << (denominator_1 * denominator_2) / q << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << " - " << numerator_2 << "/" << denominator_2 << " = " << (f1 - f2) / q << "/" << (denominator_1 * denominator_2) / q << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << f1 * f2 << "/" << denominator_1 * denominator_2 << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << " / " << numerator_2 << "/" << denominator_2 << " = " << f1 / f2 << "/" << numerator_2 * denominator_1 << std::endl;
+	std::cout << "++" << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << ++f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
+	std::cout << "Значение дроби 1 = " << f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << "--" << " * " << numerator_2 << "/" << denominator_2 << " = " << ++f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
+	std::cout << "Значение дроби 1 = " << f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
+	return 0;
+}
 
 
-	/*
-	Задача 2. Остальные операции с дробями
-	В этом задании вы переопределите остальные операторы для класса дроби.
+/*
+Задача 2. Остальные операции с дробями
+В этом задании вы переопределите остальные операторы для класса дроби.
 
-	Необходимо переопределить операторы для класса Fraction из предыдущего задания:
+Необходимо переопределить операторы для класса Fraction из предыдущего задания:
 
-	сложение;
-	вычитание;
-	умножение;
-	деление;
-	унарный минус;
-	инкремент постфиксный и префиксный;
-	декремент постфиксный и префиксный.
-	Продемонстрируйте работу ваших операторов. Попросите пользователя ввести две дроби и покажите результат каждой операции. Операции декремента и инкремента отнимают и прибавляют к дроби 1 соответственно.
+сложение;
+вычитание;
+умножение;
+деление;
+унарный минус;
+инкремент постфиксный и префиксный;
+декремент постфиксный и префиксный.
+Продемонстрируйте работу ваших операторов. Попросите пользователя ввести две дроби и покажите результат каждой операции. Операции декремента и инкремента отнимают и прибавляют к дроби 1 соответственно.
 
-	Составьте выражения, содержащие постфиксный и префиксный инкремент и декремент, чтобы продемонстрировать разницу между постфиксной и префиксной версиями.
+Составьте выражения, содержащие постфиксный и префиксный инкремент и декремент, чтобы продемонстрировать разницу между постфиксной и префиксной версиями.
 
-	Пример работы программы
-	Консоль
-	Введите числитель дроби 1: 3
-	Введите знаменатель дроби 1: 4
-	Введите числитель дроби 2: 4
-	Введите знаменатель дроби 2: 5
-	3/4 + 4/5 = 31/20
-	3/4 - 4/5 = -1/20
-	3/4 * 4/5 = 3/5
-	3/4 / 4/5 = 15/16
-	++3/4 * 4/5 = 7/5
-	Значение дроби 1 = 7/4
-	7/4-- * 4/5 = 7/5
-	Значени дроби 1 = 3/4
-	Подсказки
-	Не читайте этот раздел сразу. Попытайтесь сначала решить задачу самостоятельно :)
+Пример работы программы
+Консоль
+Введите числитель дроби 1: 3
+Введите знаменатель дроби 1: 4
+Введите числитель дроби 2: 4
+Введите знаменатель дроби 2: 5
+3/4 + 4/5 = 31/20
+3/4 - 4/5 = -1/20
+3/4 * 4/5 = 3/5
+3/4 / 4/5 = 15/16
+++3/4 * 4/5 = 7/5
+Значение дроби 1 = 7/4
+7/4-- * 4/5 = 7/5
+Значени дроби 1 = 3/4
+Подсказки
+Не читайте этот раздел сразу. Попытайтесь сначала решить задачу самостоятельно :)
 
-	Что использовать для решения.
-	Префиксная и постфиксная версии различаются фальшивым аргументом в постфиксной версии.
+Что использовать для решения.
+Префиксная и постфиксная версии различаются фальшивым аргументом в постфиксной версии.
 
-	Не забудьте, что две версии ведут себя по-разному.
+Не забудьте, что две версии ведут себя по-разному.
 
-	Не забудьте написать код, сокращающий дроби.
-	*/
+Не забудьте написать код, сокращающий дроби.
+*/
