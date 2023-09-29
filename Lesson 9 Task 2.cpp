@@ -15,7 +15,8 @@ public:
 	}
 
 	int operator+(Fraction other) {
-		return ((numerator_ * other.denominator_) + (denominator_ * other.numerator_));
+		int q = std::gcd(denominator_, other.denominator_);
+		return ((numerator_ * other.denominator_) + (denominator_ * other.numerator_))/q;
 	}
 
 	int operator-(Fraction other) {
@@ -59,11 +60,10 @@ int main()
 
 	Fraction f1(numerator_1, denominator_1);
 	Fraction f2(numerator_2, denominator_2);
+	/*Fraction f3 = f1 + f2;*/
 
-	int q = std::gcd(denominator_1, denominator_2);
-
-	std::cout << numerator_1 << "/" << denominator_1 << " + " << numerator_2 << "/" << denominator_2 << " = " << (f1 + f2) / q << "/" << (denominator_1 * denominator_2) / q << std::endl;
-	std::cout << numerator_1 << "/" << denominator_1 << " - " << numerator_2 << "/" << denominator_2 << " = " << (f1 - f2) / q << "/" << (denominator_1 * denominator_2) / q << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << " + " << numerator_2 << "/" << denominator_2 << " = " << (f1 + f2) << "/" << (denominator_1 * denominator_2) << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << " - " << numerator_2 << "/" << denominator_2 << " = " << (f1 - f2) << "/" << (denominator_1 * denominator_2) << std::endl;
 	std::cout << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << f1 * f2 << "/" << denominator_1 * denominator_2 << std::endl;
 	std::cout << numerator_1 << "/" << denominator_1 << " / " << numerator_2 << "/" << denominator_2 << " = " << f1 / f2 << "/" << numerator_2 * denominator_1 << std::endl;
 	std::cout << "++" << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << ++f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
