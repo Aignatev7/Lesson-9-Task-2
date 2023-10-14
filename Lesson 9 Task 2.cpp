@@ -14,21 +14,52 @@ public:
 		denominator_ = denominator;
 	}
 
-	int operator+(Fraction other) {
-		int q = std::gcd(denominator_, other.denominator_);
-		return ((numerator_ * other.denominator_) + (denominator_ * other.numerator_))/q;
+	Fraction operator+(Fraction other) {
+
+		int up = ((numerator_ * other.denominator_) + (denominator_ * other.numerator_));
+		int down = other.denominator_ * denominator_;
+
+		int q = std::gcd(up, down);
+
+		Fraction result(up / q, down / q);
+
+		return result;
 	}
 
-	int operator-(Fraction other) {
-		return ((numerator_ * other.denominator_) - (denominator_ * other.numerator_));
+	Fraction operator-(Fraction other) {
+
+		int up = ((numerator_ * other.denominator_) - (denominator_ * other.numerator_));
+		int down = other.denominator_ * denominator_;
+
+		int q = std::gcd(up, down);
+
+		Fraction result(up / q, down / q);
+
+		return result;
 	}
 
-	int operator*(Fraction other) {
-		return (numerator_ * other.numerator_);
+	Fraction operator*(Fraction other) {
+
+		int up = numerator_ * other.numerator_;
+		int down = other.denominator_ * denominator_;
+
+		int q = std::gcd(up, down);
+
+		Fraction result(up / q, down / q);
+
+		return result;
 	}
 
-	int operator/(Fraction other) {
-		return (numerator_ * other.denominator_);
+	Fraction operator/(Fraction other) {
+
+		int up = numerator_ * other.denominator_;
+		int down = denominator_ * other.numerator_;
+
+		int q = std::gcd(up, down);
+
+		Fraction result(up / q, down / q);
+
+		return result;
 	}
 
 	Fraction& operator++() { return *this; }
@@ -60,18 +91,22 @@ int main()
 
 	Fraction f1(numerator_1, denominator_1);
 	Fraction f2(numerator_2, denominator_2);
-	/*Fraction f3 = f1 + f2;*/
-
-	std::cout << numerator_1 << "/" << denominator_1 << " + " << numerator_2 << "/" << denominator_2 << " = " << (f1 + f2) << "/" << (denominator_1 * denominator_2) << std::endl;
-	std::cout << numerator_1 << "/" << denominator_1 << " - " << numerator_2 << "/" << denominator_2 << " = " << (f1 - f2) << "/" << (denominator_1 * denominator_2) << std::endl;
-	std::cout << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << f1 * f2 << "/" << denominator_1 * denominator_2 << std::endl;
-	std::cout << numerator_1 << "/" << denominator_1 << " / " << numerator_2 << "/" << denominator_2 << " = " << f1 / f2 << "/" << numerator_2 * denominator_1 << std::endl;
-	std::cout << "++" << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << ++f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
-	std::cout << "Значение дроби 1 = " << f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
-	std::cout << numerator_1 << "/" << denominator_1 << "--" << " * " << numerator_2 << "/" << denominator_2 << " = " << ++f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
-	std::cout << "Значение дроби 1 = " << f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
+	Fraction f3 = f1 + f2;
+	Fraction f4 = f1 - f2;
+	Fraction f5 = f1 * f2;
+	Fraction f6 = f1 / f2;
+	
+	std::cout << numerator_1 << "/" << denominator_1 << " + " << numerator_2 << "/" << denominator_2 << " = " << f3 << "/" << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << " - " << numerator_2 << "/" << denominator_2 << " = " << "/" << f4 << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << f5 << "/" << denominator_1 * denominator_2 << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << " / " << numerator_2 << "/" << denominator_2 << " = " << f6 << "/" << numerator_2 * denominator_1 << std::endl;
+	//std::cout << "++" << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << ++f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
+	//std::cout << "Значение дроби 1 = " << f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
+	//std::cout << numerator_1 << "/" << denominator_1 << "--" << " * " << numerator_2 << "/" << denominator_2 << " = " << ++f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
+	//std::cout << "Значение дроби 1 = " << f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
 	return 0;
 }
+
 
 
 /*
