@@ -18,11 +18,8 @@ public:
 
 		int up = ((numerator_ * other.denominator_) + (denominator_ * other.numerator_));
 		int down = other.denominator_ * denominator_;
-
 		int q = std::gcd(up, down);
-
 		Fraction result(up / q, down / q);
-
 		return result;
 	}
 
@@ -30,11 +27,8 @@ public:
 
 		int up = ((numerator_ * other.denominator_) - (denominator_ * other.numerator_));
 		int down = other.denominator_ * denominator_;
-
 		int q = std::gcd(up, down);
-
 		Fraction result(up / q, down / q);
-
 		return result;
 	}
 
@@ -42,11 +36,8 @@ public:
 
 		int up = numerator_ * other.numerator_;
 		int down = other.denominator_ * denominator_;
-
 		int q = std::gcd(up, down);
-
 		Fraction result(up / q, down / q);
-
 		return result;
 	}
 
@@ -54,22 +45,39 @@ public:
 
 		int up = numerator_ * other.denominator_;
 		int down = denominator_ * other.numerator_;
-
 		int q = std::gcd(up, down);
-
 		Fraction result(up / q, down / q);
-
 		return result;
 	}
 
-	Fraction& operator++() { return *this; }
+	Fraction& operator++() { 
+		
+		return *this; }
+	Fraction operator--()
+	{
+		Fraction temp = *this;
+		(*this)--;
+		return temp;
+	}
+
+	Fraction operator++(int) { return *this; }
 	Fraction operator--(int)
 	{
 		Fraction temp = *this;
 		(*this)--;
 		return temp;
 	}
+
+	// Дружественная функция для перегрузки оператора <<
+	friend std::ostream& operator<<(std::ostream& out, const Fraction& fraction);
 };
+
+// Реализация функции перегрузки оператора <<
+std::ostream& operator<<(std::ostream& out, const Fraction& fraction)
+{
+	out << fraction.numerator_ << "/" << fraction.denominator_;
+	return out;
+}
 
 int main()
 {
@@ -95,15 +103,17 @@ int main()
 	Fraction f4 = f1 - f2;
 	Fraction f5 = f1 * f2;
 	Fraction f6 = f1 / f2;
-	
-	std::cout << numerator_1 << "/" << denominator_1 << " + " << numerator_2 << "/" << denominator_2 << " = " << f3 << "/" << std::endl;
-	std::cout << numerator_1 << "/" << denominator_1 << " - " << numerator_2 << "/" << denominator_2 << " = " << "/" << f4 << std::endl;
-	std::cout << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << f5 << "/" << denominator_1 * denominator_2 << std::endl;
-	std::cout << numerator_1 << "/" << denominator_1 << " / " << numerator_2 << "/" << denominator_2 << " = " << f6 << "/" << numerator_2 * denominator_1 << std::endl;
-	//std::cout << "++" << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << ++f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
-	//std::cout << "Значение дроби 1 = " << f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
-	//std::cout << numerator_1 << "/" << denominator_1 << "--" << " * " << numerator_2 << "/" << denominator_2 << " = " << ++f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
-	//std::cout << "Значение дроби 1 = " << f1 + f2 << "/" << denominator_1 * denominator_2 << std::endl;
+	Fraction sum_pre = ++f1 + f2;
+	Fraction sum_post = f1++ + f2;
+	 
+	std::cout << numerator_1 << "/" << denominator_1 << " + " << numerator_2 << "/" << denominator_2 << " = " << f3 << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << " - " << numerator_2 << "/" << denominator_2 << " = " << f4 << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << f5 << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << " / " << numerator_2 << "/" << denominator_2 << " = " << f6 << std::endl;
+	std::cout << "++" << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << sum_pre << std::endl;
+	std::cout << "Значение дроби 1 = " << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << "--" << " * " << numerator_2 << "/" << denominator_2 << " = " << sum_post << std::endl;
+	std::cout << "Значение дроби 1 = " << std::endl;
 	return 0;
 }
 
