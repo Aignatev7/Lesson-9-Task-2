@@ -51,22 +51,24 @@ public:
 	}
 
 	Fraction& operator++() { 
-		
+		++this->numerator_ * denominator_;
 		return *this; }
-	Fraction operator--()
-	{
-		Fraction temp = *this;
-		(*this)--;
-		return temp;
-	}
 
-	Fraction operator++(int) { return *this; }
-	Fraction operator--(int)
+	/*Fraction operator--()
 	{
 		Fraction temp = *this;
 		(*this)--;
 		return temp;
-	}
+	}*/
+
+	//Fraction operator--(int) { return *this; }
+	
+	/*Fraction operator--(int)
+	{
+		Fraction temp = *this;
+		(*this)--;
+		return temp;
+	}*/
 
 	// Дружественная функция для перегрузки оператора <<
 	friend std::ostream& operator<<(std::ostream& out, const Fraction& fraction);
@@ -103,16 +105,16 @@ int main()
 	Fraction f4 = f1 - f2;
 	Fraction f5 = f1 * f2;
 	Fraction f6 = f1 / f2;
-	Fraction sum_pre = ++f1 + f2;
-	Fraction sum_post = f1++ + f2;
+	Fraction inc_pre = ++f1 * f2;
+	//Fraction dec_post = f1-- * f2;
 	 
 	std::cout << numerator_1 << "/" << denominator_1 << " + " << numerator_2 << "/" << denominator_2 << " = " << f3 << std::endl;
 	std::cout << numerator_1 << "/" << denominator_1 << " - " << numerator_2 << "/" << denominator_2 << " = " << f4 << std::endl;
 	std::cout << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << f5 << std::endl;
 	std::cout << numerator_1 << "/" << denominator_1 << " / " << numerator_2 << "/" << denominator_2 << " = " << f6 << std::endl;
-	std::cout << "++" << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << sum_pre << std::endl;
+	std::cout << "++" << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << inc_pre << std::endl;
 	std::cout << "Значение дроби 1 = " << std::endl;
-	std::cout << numerator_1 << "/" << denominator_1 << "--" << " * " << numerator_2 << "/" << denominator_2 << " = " << sum_post << std::endl;
+	//std::cout << numerator_1 << "/" << denominator_1 << "--" << " * " << numerator_2 << "/" << denominator_2 << " = " << dec_post << std::endl;
 	std::cout << "Значение дроби 1 = " << std::endl;
 	return 0;
 }
