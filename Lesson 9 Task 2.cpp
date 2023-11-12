@@ -50,27 +50,33 @@ public:
 		return result;
 	}
 
-	Fraction& operator++() { 
-		++this->numerator_ * denominator_;
-		return *this; }
-
-	/*Fraction operator--()
+	Fraction operator++()
 	{
-		Fraction temp = *this;
-		(*this)--;
-		return temp;
-	}*/
+		this->numerator_ = this->numerator_ + this->denominator_;
+		return *this;
+	}
 
-	//Fraction operator--(int) { return *this; }
+	Fraction operator++(int)
+	{
+		Fraction temp = *this;		//нужно сохранить предыдущее значение объекта в отдельную переменную
+		this->numerator_ = this->numerator_ + this->denominator_;		//потом изменить значение объекта
+		return temp;				//и вернуть через return предыдущее значение
+	}
+
+	Fraction operator--()
+	{
+		this->numerator_ = this->numerator_ - this->denominator_;
+		return *this;
+	}
 	
-	/*Fraction operator--(int)
+	Fraction operator--(int)
 	{
-		Fraction temp = *this;
-		(*this)--;
-		return temp;
-	}*/
+		Fraction temp = *this;		//нужно сохранить предыдущее значение объекта в отдельную переменную
+		this->numerator_ = this->numerator_ - this->denominator_;		//потом изменить значение объекта
+		return temp;				//и вернуть через return предыдущее значение
+	}
 
-	// Дружественная функция для перегрузки оператора <<
+		// Дружественная функция для перегрузки оператора <<
 	friend std::ostream& operator<<(std::ostream& out, const Fraction& fraction);
 };
 
@@ -106,16 +112,22 @@ int main()
 	Fraction f5 = f1 * f2;
 	Fraction f6 = f1 / f2;
 	Fraction inc_pre = ++f1 * f2;
-	//Fraction dec_post = f1-- * f2;
-	 
+	Fraction inc_post = f1++ * f2;
+	Fraction dec_pre = --f1 * f2;
+	Fraction dec_post = f1-- * f2;
+
 	std::cout << numerator_1 << "/" << denominator_1 << " + " << numerator_2 << "/" << denominator_2 << " = " << f3 << std::endl;
 	std::cout << numerator_1 << "/" << denominator_1 << " - " << numerator_2 << "/" << denominator_2 << " = " << f4 << std::endl;
 	std::cout << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << f5 << std::endl;
 	std::cout << numerator_1 << "/" << denominator_1 << " / " << numerator_2 << "/" << denominator_2 << " = " << f6 << std::endl;
 	std::cout << "++" << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << inc_pre << std::endl;
-	std::cout << "Значение дроби 1 = " << std::endl;
-	//std::cout << numerator_1 << "/" << denominator_1 << "--" << " * " << numerator_2 << "/" << denominator_2 << " = " << dec_post << std::endl;
-	std::cout << "Значение дроби 1 = " << std::endl;
+	std::cout << "Значение дроби 1 = " << ++f1 << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << "++" << " * " << numerator_2 << "/" << denominator_2 << " = " << inc_post << std::endl;
+	std::cout << "Значение дроби 1 = " << f1++ << std::endl;
+	std::cout << "--" << numerator_1 << "/" << denominator_1 << " * " << numerator_2 << "/" << denominator_2 << " = " << dec_pre << std::endl;
+	std::cout << "Значение дроби 1 = " << --f1 << std::endl;
+	std::cout << numerator_1 << "/" << denominator_1 << "--" << " * " << numerator_2 << "/" << denominator_2 << " = " << dec_post << std::endl;
+	std::cout << "Значение дроби 1 = " << f1-- << std::endl;
 	return 0;
 }
 
